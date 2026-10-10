@@ -4,6 +4,10 @@
 docker run -p 9000:9000 -p 9001:9001 alpine/minio:RELEASE.2025-10-15T17-29-55Z server /tmp/minio --console-address :9001
 ```
 
+```
+http://10.244.7.108:9001/api/v1/download-shared-object/aHR0cDovLzEyNy4wLjAuMTo5MDAwL3Rlc3QvZGF5MS1kb2NrZXItZnVuZGFtZW50YWxzLnBkZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUQ0V1U3MDEwWlZCRFlaTVJSVlZMJTJGMjAyNjEwMTAlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYxMDEwVDA3MTMwNVomWC1BbXotRXhwaXJlcz00MzIwMCZYLUFtei1TZWN1cml0eS1Ub2tlbj1leUpoYkdjaU9pSklVelV4TWlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaFkyTmxjM05MWlhraU9pSkVORmRWTnpBeE1GcFdRa1JaV2sxU1VsWldUQ0lzSW1WNGNDSTZNVGM1TVRZMU9UUTFNU3dpY0dGeVpXNTBJam9pYldsdWFXOWhaRzFwYmlKOS5GQkhib2JZWWcxNTBoamgyWnRpa01aNTZIRnI0VFdVNUNibGE5SEhnZER5STN1N0VBa2djZmNSQ1p5WUhyT0JNalZ1Y1ktaVdMSWVheGZlWlNfX2FyQSZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmdmVyc2lvbklkPW51bGwmWC1BbXotU2lnbmF0dXJlPWY5YTE4ZTljNDIwYThmMmQ2MmEzMmQ1MzhiNDFjMzkxYjYyZjc2NzMxOWM2ZWExMjRlMDFiYWExNTNmOGNmZTY
+```
+
 เอกสารและโค้ดประกอบการอบรม **Docker สู่ CI/CD** สำหรับนักศึกษาวิศวกรรมคอมพิวเตอร์ ชั้นปีที่ 3 (2 วัน · 14 ชั่วโมง)
 
 แอปตัวอย่างที่ใช้ตลอด workshop คือ **Todo App**: React (Vite + TS) → Express (TS) → PostgreSQL
