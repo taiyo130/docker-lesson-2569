@@ -8,6 +8,13 @@
 Browser ──▶ web (nginx + React) ──/api──▶ api (Express) ──▶ db (PostgreSQL)
 ```
 
+## 📝 แบบทดสอบ
+
+| | ทำเมื่อไร | ลิงก์ |
+|---|---|---|
+| **Pre-test** | ก่อนเริ่มอบรมวันที่ 1 | [ทำแบบทดสอบ](https://docs.google.com/forms/d/e/1FAIpQLSd1ajYXxDpUXLlsTU-VX1skWs66qNxj88Rk3CzsWeiCO9hlgg/viewform) |
+| **Post-test** | หลังจบอบรมวันที่ 2 | [ทำแบบทดสอบ](https://docs.google.com/forms/d/e/1FAIpQLScT-ZWC_l7JcGwd1m92nBnial75mIpi0TkteexfwZCwTV8toQ/viewform) |
+
 ## เริ่มต้น
 
 ```bash
