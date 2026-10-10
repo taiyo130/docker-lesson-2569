@@ -28,7 +28,10 @@ labs/day1/           แบบฝึกหัดวันที่ 1 (แต่�
 labs/day2/           แบบฝึกหัดวันที่ 2
 solutions/           เฉลย
 cheatsheet.md        คำสั่งที่ใช้บ่อย
+slides/              สไลด์ประกอบการสอน (PDF)
 ```
+
+📑 สไลด์วันที่ 1: [slides/day1-docker-fundamentals.pdf](slides/day1-docker-fundamentals.pdf)
 
 ## วันที่ 1 — Docker Fundamentals
 

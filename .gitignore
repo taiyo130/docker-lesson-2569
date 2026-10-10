@@ -4,3 +4,6 @@ dist/
 *.env
 !.env.example
 .DS_Store
+
+# ไฟล์ผู้สอน (มีเฉลยข้อสอบ) — ห้าม commit
+instructor/
