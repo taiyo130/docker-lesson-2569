@@ -1,0 +1,7 @@
+# ❌ Dockerfile แบบ "ใช้ได้ แต่ไม่ดี" — ลองนับดูว่ามีปัญหากี่จุด
+FROM node:24
+WORKDIR /app
+COPY . .
+RUN npm install
+RUN npm run build
+CMD ["npm", "start"]

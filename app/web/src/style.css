@@ -1,0 +1,14 @@
+:root { font-family: system-ui, sans-serif; color-scheme: light dark; }
+body { margin: 0; display: flex; justify-content: center; background: Canvas; }
+main { width: min(560px, 100% - 32px); padding: 48px 0; }
+h1 { margin: 0 0 24px; }
+form { display: flex; gap: 8px; }
+form input { flex: 1; padding: 10px 12px; font-size: 16px; border: 1px solid #8886; border-radius: 8px; }
+button { padding: 10px 16px; font-size: 15px; border: 0; border-radius: 8px; background: #1d63ed; color: white; cursor: pointer; }
+ul { list-style: none; padding: 0; margin: 24px 0; }
+li { display: flex; justify-content: space-between; align-items: center; padding: 10px 4px; border-bottom: 1px solid #8884; }
+li label { display: flex; gap: 10px; align-items: center; }
+li button { background: transparent; color: inherit; opacity: 0.5; padding: 4px 8px; }
+li.done label { text-decoration: line-through; opacity: 0.5; }
+.error { color: #d33; }
+footer { font-size: 13px; opacity: 0.7; }
