@@ -4,7 +4,7 @@
 
 ## 1.1 ตรวจว่าเครื่องพร้อม
 
-```bash
+```powershell
 docker version          # ต้องเห็นทั้ง Client และ Server
 docker run hello-world
 ```
@@ -13,7 +13,7 @@ docker run hello-world
 
 ## 1.2 Image กับ Container
 
-```bash
+```powershell
 docker pull nginx:1.29-alpine      # ดึง image จาก Docker Hub
 docker images                      # image ที่มีในเครื่อง
 docker run -d --name web -p 8080:80 nginx:1.29-alpine
@@ -30,7 +30,7 @@ docker ps                          # container ที่กำลังรัน
 
 ## 1.3 ดูข้างใน container
 
-```bash
+```powershell
 docker logs web            # log ที่ออก stdout/stderr
 docker logs -f web         # ตามดูแบบ real-time (Ctrl+C เพื่อออก)
 docker exec -it web sh     # เปิด shell ใน container ที่รันอยู่
@@ -42,7 +42,7 @@ docker stats --no-stream   # CPU / RAM ที่ใช้
 
 ## 1.4 Interactive mode
 
-```bash
+```powershell
 docker run -it --rm alpine:3 sh
 #   ลอง: apk add curl ; curl -I https://www.google.com ; exit
 docker run -it --rm alpine:3 sh -c "which curl || echo 'curl หายไปแล้ว!'"
@@ -53,7 +53,7 @@ docker run -it --rm alpine:3 sh -c "which curl || echo 'curl หายไปแ�
 
 ## 1.5 Lifecycle
 
-```bash
+```powershell
 docker stop web      # ส่ง SIGTERM → รอ 10 วิ → SIGKILL
 docker ps            # ไม่เห็นแล้ว
 docker ps -a         # เห็น (สถานะ Exited)
@@ -76,7 +76,7 @@ docker rmi nginx:1.29-alpine
 
 ## 🧹 ทำความสะอาด
 
-```bash
+```powershell
 docker system df       # ดูว่า Docker ใช้พื้นที่เท่าไร
 docker system prune    # ลบ container ที่หยุดแล้ว, network ที่ไม่ใช้, dangling image
 ```

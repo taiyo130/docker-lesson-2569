@@ -17,13 +17,22 @@ Browser ──▶ web (nginx + React) ──/api──▶ api (Express) ──�
 
 ## เริ่มต้น
 
-```bash
+```powershell
 git clone https://github.com/taiyo130/docker-lesson-2569.git
 cd docker-lesson-2569
 docker version
 ```
 
 ต้องมี: Docker Desktop (หรือ Docker Engine + Compose v2), Git, VS Code, บัญชี GitHub และ Docker Hub
+
+### 🪟 ใช้ Terminal อะไร
+
+คำสั่งใน lab เขียนสำหรับ **PowerShell บน Windows** (เปิดผ่าน Windows Terminal หรือ terminal ใน VS Code)
+
+- เปิด **Docker Desktop** ให้ไอคอนวาฬขึ้นก่อนทุกครั้ง ไม่งั้นจะเจอ `Cannot connect to the Docker daemon`
+- ไม่แนะนำ **Git Bash** — มันแปลง path แบบ `/app` เป็น path ของ Windows ทำให้ `-v` พัง
+- เรียก API ด้วย `irm` (Invoke-RestMethod) หรือเปิดใน browser · `curl` ใน PowerShell 5.1 ไม่ใช่ curl ตัวจริง ให้ใช้ `curl.exe`
+- ขึ้นบรรทัดใหม่ในคำสั่งยาว ๆ ใช้ `` ` `` (backtick) · บน macOS/Linux ใช้ `\` แทน
 
 ## โครงสร้าง repo
 
@@ -66,10 +75,11 @@ slides/              สไลด์ประกอบการสอน (PDF)
 
 ## รันแอปทั้งชุด (เฉลยวันที่ 2)
 
-```bash
-cp solutions/day1/web/{Dockerfile,nginx.conf.template,.dockerignore} app/web/
-cp labs/day1/03-build-like-a-pro/{Dockerfile,.dockerignore} app/api/
-cp solutions/day2/compose.yaml solutions/day2/.env.example app/
-cd app && cp .env.example .env
+```powershell
+cp solutions/day1/web/Dockerfile, solutions/day1/web/nginx.conf.template, solutions/day1/web/.dockerignore app/web/
+cp labs/day1/03-build-like-a-pro/Dockerfile, labs/day1/03-build-like-a-pro/.dockerignore app/api/
+cp solutions/day2/compose.yaml, solutions/day2/.env.example app/
+cd app
+cp .env.example .env
 docker compose up -d --build      # เปิด http://localhost:8080
 ```

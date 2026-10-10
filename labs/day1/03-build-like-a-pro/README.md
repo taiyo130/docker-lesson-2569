@@ -5,16 +5,19 @@
 
 ## 3.0 ลองรันแบบไม่มี Docker ก่อน (ถ้าเครื่องมี Node)
 
-```bash
+```powershell
 cd app/api
-npm ci && npm test && npm run build && npm start
+npm ci
+npm test
+npm run build
+npm start          # Ctrl+C เพื่อหยุด
 ```
 
 นี่คือขั้นตอนที่ Dockerfile ต้องทำแทนเรา
 
 ## 3.1 แบบ naive ❌
 
-```bash
+```powershell
 cp ../../labs/day1/03-build-like-a-pro/Dockerfile.naive Dockerfile
 docker build -t todo-api:naive .
 docker images todo-api
@@ -30,7 +33,7 @@ docker images todo-api
 
 ## 3.2 Layer cache ทำงานอย่างไร
 
-```bash
+```powershell
 docker build -t todo-api:naive .      # รันซ้ำ → ทุก step ขึ้น CACHED
 # แก้ข้อความใน src/server.ts สักนิด แล้ว build ใหม่
 docker build -t todo-api:naive .      # npm install รันใหม่ทั้งที่ package ไม่เปลี่ยน!
@@ -41,7 +44,7 @@ docker build -t todo-api:naive .      # npm install รันใหม่ทั�
 
 ## 3.3 แบบมืออาชีพ ✅
 
-```bash
+```powershell
 cp ../../labs/day1/03-build-like-a-pro/Dockerfile Dockerfile
 cp ../../labs/day1/03-build-like-a-pro/.dockerignore .dockerignore
 docker build -t todo-api:1.0 .
@@ -60,23 +63,24 @@ docker images todo-api                # เทียบขนาด naive vs 1.0
 
 ## 3.4 รันและตรวจสอบ
 
-```bash
+```powershell
 docker run -d --name api -p 3000:3000 todo-api:1.0
-curl http://localhost:3000/api/info
-curl -X POST http://localhost:3000/api/todos -H "Content-Type: application/json" -d '{"title":"learn docker"}'
-curl http://localhost:3000/api/todos
+irm http://localhost:3000/api/info
+irm http://localhost:3000/api/todos -Method Post -ContentType "application/json" -Body '{"title":"learn docker"}'
+irm http://localhost:3000/api/todos
 
 docker exec api whoami                # node (ไม่ใช่ root)
 docker ps                             # STATUS มี (healthy) จาก HEALTHCHECK
-docker stop api && docker logs api    # เห็น "SIGTERM received" = graceful shutdown
+docker stop api
+docker logs api                       # เห็น "SIGTERM received" = graceful shutdown
 ```
 
-> PowerShell: ใช้ `curl.exe` แทน `curl` และ escape JSON เป็น `'{\"title\":\"learn docker\"}'`
-> หรือเปิด http://localhost:3000/api/todos ใน browser แทน
+> `irm` = `Invoke-RestMethod` ของ PowerShell — แสดง JSON เป็นตารางให้อ่านง่าย (GET เปิดใน browser ก็ได้)
+> bash / macOS: `curl -X POST http://localhost:3000/api/todos -H "Content-Type: application/json" -d '{"title":"learn docker"}'`
 
 ## 3.5 Tag & Push ขึ้น Docker Hub
 
-```bash
+```powershell
 docker login                                      # ใช้บัญชี Docker Hub ของตัวเอง
 docker tag todo-api:1.0 <dockerhub-user>/todo-api:1.0
 docker push <dockerhub-user>/todo-api:1.0

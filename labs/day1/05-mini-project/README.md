@@ -14,7 +14,7 @@
 
 **เป้าหมาย:** image < 100 MB
 
-```bash
+```powershell
 cd app/web
 docker build -t todo-web:1.0 .
 docker run -d --name web -p 8080:80 todo-web:1.0
@@ -25,7 +25,7 @@ docker run -d --name web -p 8080:80 todo-web:1.0
 React ใน browser เรียก `/api/...` → nginx ต้องส่งต่อไปที่ container `api`
 ใช้ไฟล์ `nginx.conf.template` จากเฉลยได้ แล้วลอง:
 
-```bash
+```powershell
 docker network create todo-net
 docker run -d --name api --network todo-net todo-api:1.0
 docker run -d --name web --network todo-net -p 8080:80 todo-web:1.0
@@ -38,15 +38,18 @@ docker run -d --name web --network todo-net -p 8080:80 todo-web:1.0
 
 สร้าง `app/web/Dockerfile.dev` ที่รัน `npm run dev` (Vite dev server, port 5173)
 
-```bash
+```powershell
 docker build -f Dockerfile.dev -t todo-web:dev .
-docker run --rm -p 5173:5173 \
-  -v "${PWD}:/app" -v /app/node_modules \
-  -e VITE_USE_POLLING=true \
-  -e API_URL=http://host.docker.internal:3000 \
-  --add-host=host.docker.internal:host-gateway \
+docker run --rm -p 5173:5173 `
+  -v "${PWD}:/app" -v /app/node_modules `
+  -e VITE_USE_POLLING=true `
+  -e API_URL=http://host.docker.internal:3000 `
+  --add-host=host.docker.internal:host-gateway `
   todo-web:dev
 ```
+
+> PowerShell ขึ้นบรรทัดใหม่ด้วย `` ` `` (backtick) ต้องเป็นตัวสุดท้ายของบรรทัด ห้ามมีช่องว่างตามหลัง
+> bash / macOS: เปลี่ยน `` ` `` เป็น `\`
 
 (รัน api ไว้ด้วย: `docker run -d -p 3000:3000 todo-api:1.0`)
 
