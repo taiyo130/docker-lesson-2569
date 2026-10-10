@@ -1,6 +1,8 @@
 # Docker → CI/CD Workshop 2569 🐳
 
+```
 docker run -p 9000:9000 -p 9001:9001 -e "MINIO_ROOT_USER=admin" -e "MINIO_ROOT_PASSWORD=123456789" quay.io/minio/aistor/minio server /data --console-address ":9001"
+```
 
 เอกสารและโค้ดประกอบการอบรม **Docker สู่ CI/CD** สำหรับนักศึกษาวิศวกรรมคอมพิวเตอร์ ชั้นปีที่ 3 (2 วัน · 14 ชั่วโมง)
 
