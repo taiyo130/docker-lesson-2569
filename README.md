@@ -1,7 +1,7 @@
 # Docker → CI/CD Workshop 2569 🐳
 
 ```
-docker run -p 9000:9000 -p 9001:9001 alpine/minio:RELEASE.2025-10-15T17-29-55Z server /tmp/minio --console-address :9001
+docker run -p 9000:9000 -p 9001:9001 -v ./minio/data:/data alpine/minio:RELEASE.2025-10-15T17-29-55Z server /data --console-address :9001
 ```
 
 ```
