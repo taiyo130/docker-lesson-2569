@@ -5,8 +5,7 @@
 ```
 GitHub Actions ──ssh :50NN──▶ stdNN (Docker) ── docker compose pull + up
                                     ▲
-Browser ─▶ https://stdNN.cpedev.cloud ─▶ nginx ─▶ stdNN:8080 (web)
-           https://api-stdNN.cpedev.cloud ─▶       stdNN:3000 (api)
+Browser ─▶ https://stdNN.cpedev.cloud ─▶ nginx ─▶ stdNN:8080 (web) ─/api─▶ api ─▶ db
 ```
 
 ผู้สอนแจกการ์ด: **NN** (เลขของเรา), **password** · server `76.13.177.240` · user `student`
@@ -15,7 +14,7 @@ Browser ─▶ https://stdNN.cpedev.cloud ─▶ nginx ─▶ stdNN:8080 (web)
 |---|---|
 | SSH | `ssh -p 50NN student@76.13.177.240` (std07 → `-p 5007`) |
 | เว็บ | `https://stdNN.cpedev.cloud` |
-| API | `https://api-stdNN.cpedev.cloud/api/info` |
+| API | `https://stdNN.cpedev.cloud/api/info` |
 
 ## 9.1 เข้า server ครั้งแรก
 
@@ -47,11 +46,11 @@ cat ~/.ssh/deploy           # คัดลอกทั้งหมด ตั้�
 
 ```bash
 mkdir -p ~/todo
-printf 'POSTGRES_PASSWORD=%s\nWEB_PORT=8080\nAPI_PORT=3000\n' "$(openssl rand -hex 16)" > ~/todo/.env
+printf 'POSTGRES_PASSWORD=%s\nWEB_PORT=8080\n' "$(openssl rand -hex 16)" > ~/todo/.env
 cat ~/todo/.env
 ```
 
-> ต้องเป็น **8080** และ **3000** — nginx ของ server ส่ง `stdNN.cpedev.cloud` มาที่ port 8080 และ `api-stdNN` มาที่ 3000
+> `WEB_PORT` ต้องเป็น **8080** — nginx ของ server ส่ง `stdNN.cpedev.cloud` มาที่ port 8080
 > รหัส database อยู่บน server เท่านั้น ไม่อยู่ใน git และไม่อยู่ใน GitHub
 
 ## 9.4 ตั้งค่า GitHub
@@ -161,7 +160,7 @@ deploy เวอร์ชันใหม่แล้วพัง? กลับ�
 cd ~/todo
 TAG=<sha เก่า> API_IMAGE=ghcr.io/<user>/todo-cicd-api WEB_IMAGE=ghcr.io/<user>/todo-cicd-web \
   docker compose up -d --no-build --wait
-curl -s localhost:3000/api/info      # version = sha เก่า · ข้อมูล todo ยังอยู่ (อยู่ใน volume)
+curl -s localhost:8080/api/info      # version = sha เก่า · ข้อมูล todo ยังอยู่ (อยู่ใน volume)
 ```
 
 **วิธี 2 — บน GitHub**: Actions → เลือก run เก่าที่เขียว → **Re-run all jobs** → deploy commit นั้นอีกครั้ง
@@ -171,6 +170,6 @@ curl -s localhost:3000/api/info      # version = sha เก่า · ข้อ�
 ## ✅ Checkpoint
 
 - [ ] `https://stdNN.cpedev.cloud` เปิดได้ เพิ่ม todo ได้ footer แสดง `store: postgres`
-- [ ] `https://api-stdNN.cpedev.cloud/api/info` ตอบ JSON
+- [ ] `https://stdNN.cpedev.cloud/api/info` ตอบ JSON
 - [ ] push ครั้งใหม่ → เว็บเปลี่ยนเองโดยไม่ต้อง ssh
 - [ ] rollback ได้อย่างน้อย 1 วิธี

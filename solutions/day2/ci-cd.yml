@@ -3,7 +3,7 @@
 #   Variables: DEPLOY_HOST=76.13.177.240  DEPLOY_PORT=50NN  DEPLOY_USER=student
 #              APP_URL=https://stdNN.cpedev.cloud   (ใช้ smoke test หลัง deploy)
 #   Secrets:   SSH_KEY  (private key ที่ public key อยู่ใน ~/.ssh/authorized_keys บน server)
-# บน server: สร้าง ~/todo/.env ไว้หนึ่งครั้ง (POSTGRES_PASSWORD, WEB_PORT=8080, API_PORT=3000)
+# บน server: สร้าง ~/todo/.env ไว้หนึ่งครั้ง (POSTGRES_PASSWORD, WEB_PORT=8080)
 name: ci-cd
 
 on:

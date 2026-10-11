@@ -7,12 +7,11 @@ LXD container 1 ตัวต่อนักศึกษา 1 คน มี Docke
 | container | `stdNN` (Ubuntu 24.04 + Docker Engine + compose plugin) |
 | IP ภายใน | `10.45.163.(200+N)` |
 | SSH | `ssh -p 50NN student@76.13.177.240` |
-| Web | `https://stdNN.cpedev.cloud` → container port **8080** |
-| API | `https://api-stdNN.cpedev.cloud` → container port **3000** |
+| Web | `https://stdNN.cpedev.cloud` → container port **8080** (`/api` วิ่งผ่าน web ไปหา api ใน compose) |
 | limit | 2 CPU, 2 GiB RAM, 4000 processes (profile `student`) |
 
 ```
-Internet ─▶ host nginx :80/:443 ──(map $host)──▶ 10.45.163.2NN:8080 / :3000
+Internet ─▶ host nginx :80/:443 ──(map $host)──▶ 10.45.163.2NN:8080
          └▶ host :50NN ──(LXD proxy device)──▶ stdNN :22
 ```
 

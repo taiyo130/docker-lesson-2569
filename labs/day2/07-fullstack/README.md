@@ -28,6 +28,24 @@ docker compose ps
 > web (nginx) ส่ง `/api/...` ต่อไปที่ `api:3000` — ค่า default `API_UPSTREAM=api:3000` ใน Dockerfile ของ Lab 5
 > ชื่อ `api` ตรงกับชื่อ service จึงใช้ได้ทันที
 
+ตอนนี้ browser เรียก api ผ่าน web แล้ว → **ลบ `ports:` ของ api ออก** ให้เปิดสู่ภายนอกแค่ web (เหมือน db)
+
+```yaml
+  api:
+    build: ./api
+    environment:
+      DATABASE_URL: postgres://todo:${POSTGRES_PASSWORD}@db:5432/todo
+    # ไม่มี ports: แล้ว — เรียกผ่าน http://localhost:8080/api/...
+```
+
+```powershell
+docker compose up -d --wait
+irm http://localhost:8080/api/info     # ได้ ✅
+irm http://localhost:3000/api/info     # ต่อไม่ได้ — ถูกต้อง
+```
+
+> บน server ก็เป็นแบบเดียวกัน: มีแค่ `https://stdNN.cpedev.cloud` ชี้มาที่ port 8080 และ `/api` วิ่งผ่าน web
+
 ## 7.2 เก็บข้อมูลด้วย named volume
 
 ตอนนี้ลอง `docker compose down` แล้ว `up` ใหม่ → todo หายหมด เพราะ db ยังไม่มี volume

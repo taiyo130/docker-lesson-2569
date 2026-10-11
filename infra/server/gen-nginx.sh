@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# สร้าง nginx config สำหรับ stdNN.cpedev.cloud (web :8080) และ api-stdNN.cpedev.cloud (api :3000)
+# สร้าง nginx config สำหรับ stdNN.cpedev.cloud → web :8080 ใน container (/api วิ่งผ่าน web)
 # ใช้: bash gen-nginx.sh 0 21 [ssl] > /etc/nginx/sites-available/cpedev-students
 set -euo pipefail
 FIRST=${1:-0}
@@ -14,8 +14,7 @@ echo "    default \"\";"
 for n in $(seq "$FIRST" "$LAST"); do
   name=$(printf "std%02d" "$n")
   ip="10.45.163.$((200 + n))"
-  echo "    $name.cpedev.cloud      $ip:8080;"
-  echo "    api-$name.cpedev.cloud  $ip:3000;"
+  echo "    $name.cpedev.cloud  $ip:8080;"
 done
 echo "}"
 
@@ -23,7 +22,7 @@ cat <<'NGINX'
 
 server {
     listen 80;
-    server_name ~^(api-)?std\d\d\.cpedev\.cloud$;
+    server_name ~^std\d\d\.cpedev\.cloud$;
 NGINX
 if [ -n "$SSL" ]; then
 cat <<NGINX
@@ -33,7 +32,7 @@ cat <<NGINX
 
 server {
     listen 443 ssl;
-    server_name ~^(api-)?std\d\d\.cpedev\.cloud\$;
+    server_name ~^std\d\d\.cpedev\.cloud\$;
     ssl_certificate     $CERT/fullchain.pem;
     ssl_certificate_key $CERT/privkey.pem;
     include /etc/letsencrypt/options-ssl-nginx.conf;
@@ -62,7 +61,7 @@ cat <<'NGINX'
     location @not_deployed {
         default_type text/plain;
         charset utf-8;
-        return 502 "$host: ยังไม่มีแอปรันอยู่ (web ต้องเปิด port 8080, api ต้องเปิด port 3000 ใน container)\n";
+        return 502 "$host: ยังไม่มีแอปรันอยู่ (web ต้องเปิด port 8080 ใน container)\n";
     }
 }
 

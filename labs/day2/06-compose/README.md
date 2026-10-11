@@ -123,7 +123,7 @@ docker compose exec api wget -qO- http://localhost:3000/api/health
 สร้าง `app/.env`:
 
 ```powershell
-Set-Content .env "POSTGRES_PASSWORD=secret", "WEB_PORT=8080", "API_PORT=3000"
+Set-Content .env "POSTGRES_PASSWORD=secret"
 ```
 
 แก้ `compose.yaml` ให้อ่านค่าจาก `.env`:
@@ -132,8 +132,6 @@ Set-Content .env "POSTGRES_PASSWORD=secret", "WEB_PORT=8080", "API_PORT=3000"
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?ตั้งค่าใน .env}
       ...
       DATABASE_URL: postgres://todo:${POSTGRES_PASSWORD}@db:5432/todo
-    ports:
-      - "${API_PORT:-3000}:3000"
 ```
 
 ```powershell

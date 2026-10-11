@@ -21,8 +21,7 @@ services:
     environment:
       DATABASE_URL: postgres://todo:${POSTGRES_PASSWORD}@db:5432/todo
       APP_VERSION: ${TAG:-dev}
-    ports:
-      - "${API_PORT:-3000}:3000"   # บน server: api-stdXX.cpedev.cloud → port 3000
+    # ไม่เปิด port — browser เรียก /api ผ่าน web (nginx) ที่ส่งต่อมาที่ api:3000
     depends_on:
       db:
         condition: service_healthy   # รอให้ DB พร้อมจริง ไม่ใช่แค่ container start
