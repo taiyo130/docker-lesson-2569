@@ -1,0 +1,15 @@
+# Docker ตั้ง FORWARD policy เป็น drop ทำให้ LXD container ออก internet ไม่ได้
+# service นี้เพิ่ม rule ใน DOCKER-USER (Docker ไม่ลบ chain นี้) ให้ traffic ของ lxdbr0 ผ่านได้
+[Unit]
+Description=Allow LXD bridge (lxdbr0) traffic through Docker's FORWARD drop policy
+After=docker.service snap.lxd.daemon.service
+Wants=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/sh -c 'iptables -C DOCKER-USER -i lxdbr0 -j ACCEPT 2>/dev/null || iptables -I DOCKER-USER -i lxdbr0 -j ACCEPT'
+ExecStart=/bin/sh -c 'iptables -C DOCKER-USER -o lxdbr0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT 2>/dev/null || iptables -I DOCKER-USER -o lxdbr0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT'
+
+[Install]
+WantedBy=multi-user.target
