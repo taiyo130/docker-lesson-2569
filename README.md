@@ -73,13 +73,19 @@ slides/              สไลด์ประกอบการสอน (PDF)
 
 ## วันที่ 2 — Compose → CI/CD
 
-| เวลา | หัวข้อ |
-|---|---|
-| 09:00–10:30 | Docker Compose + Networking (service DNS, healthcheck, depends_on, `.env`) |
-| 10:45–12:00 | Workshop: web + api + db ด้วย Compose |
-| 13:00–14:30 | CI: GitHub Actions — test → build → push ขึ้น GHCR |
-| 14:45–16:00 | CD: deploy ขึ้น server ผ่าน SSH (`stdXX.cpedev.cloud`) |
-| 16:00–17:00 | Security scanning, troubleshooting, ต่อยอด Kubernetes, Q&A |
+| เวลา | หัวข้อ | Lab |
+|---|---|---|
+| 09:00–10:30 | Docker Compose + Networking (service DNS, healthcheck, depends_on, `.env`) | [Lab 6](labs/day2/06-compose) |
+| 10:30–10:45 | ☕ พัก | |
+| 10:45–12:00 | Workshop: web + api + db ด้วย Compose | [Lab 7](labs/day2/07-fullstack) |
+| 12:00–13:00 | 🍚 พักกลางวัน | |
+| 13:00–14:30 | CI: GitHub Actions — test → build → push ขึ้น GHCR | [Lab 8](labs/day2/08-ci) |
+| 14:30–14:45 | ☕ พัก | |
+| 14:45–16:00 | CD: deploy ขึ้น server ผ่าน SSH (`stdNN.cpedev.cloud`) | [Lab 9](labs/day2/09-cd) |
+| 16:00–17:00 | Security scanning, troubleshooting, ต่อยอด Kubernetes, Q&A | [Lab 10](labs/day2/10-security) |
+
+ตัวอย่าง repo ตอนจบวันที่ 2 (deploy ขึ้น `std00.cpedev.cloud` จริง): [taiyo130/docker-lesson-2569-demo](https://github.com/taiyo130/docker-lesson-2569-demo)
+Server สำหรับ CD: [`infra/server/`](infra/server)
 
 ## รันแอปทั้งชุด (เฉลยวันที่ 2)
 

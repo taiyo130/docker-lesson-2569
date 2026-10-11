@@ -1,8 +1,9 @@
 # วางไฟล์นี้ที่ .github/workflows/ci-cd.yml ใน repo ของนักศึกษา
-# ต้องตั้งค่าใน GitHub → Settings → Secrets and variables → Actions
-#   Variables: DEPLOY_HOST, DEPLOY_PORT, DEPLOY_USER
-#   Secrets:   SSH_KEY (private key ที่ public key อยู่ใน ~/.ssh/authorized_keys ของ server)
-# บน server: สร้าง ~/todo/.env (มี POSTGRES_PASSWORD และ WEB_PORT=80) ไว้ล่วงหน้าหนึ่งครั้ง
+# ตั้งค่าใน GitHub → Settings → Secrets and variables → Actions
+#   Variables: DEPLOY_HOST=76.13.177.240  DEPLOY_PORT=50NN  DEPLOY_USER=student
+#              APP_URL=https://stdNN.cpedev.cloud   (ใช้ smoke test หลัง deploy)
+#   Secrets:   SSH_KEY  (private key ที่ public key อยู่ใน ~/.ssh/authorized_keys บน server)
+# บน server: สร้าง ~/todo/.env ไว้หนึ่งครั้ง (POSTGRES_PASSWORD, WEB_PORT=8080, API_PORT=3000)
 name: ci-cd
 
 on:
@@ -57,6 +58,14 @@ jobs:
             ${{ steps.image.outputs.name }}:latest
           cache-from: type=gha,scope=${{ matrix.service }}
           cache-to: type=gha,mode=max,scope=${{ matrix.service }}
+      # Lab 10: สแกนช่องโหว่ — เปลี่ยน exit-code เป็น '1' เพื่อให้ pipeline ล้มเมื่อเจอ CRITICAL
+      - uses: aquasecurity/trivy-action@v0.36.0
+        if: github.event_name == 'push'
+        with:
+          image-ref: ${{ steps.image.outputs.name }}:${{ github.sha }}
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: '0'
 
   deploy:
     needs: build
@@ -79,17 +88,26 @@ jobs:
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -p "$PORT" "$HOST" >> ~/.ssh/known_hosts
+      - name: Copy compose.yaml
+        run: |
+          ssh -p "$PORT" "$USER@$HOST" "mkdir -p ~/todo && test -f ~/todo/.env || { echo 'ไม่พบ ~/todo/.env บน server'; exit 1; }"
+          scp -P "$PORT" app/compose.yaml "$USER@$HOST:~/todo/compose.yaml"
+      - name: Login GHCR on server
+        # ส่ง token ทาง stdin — ไม่โผล่ใน command line หรือ log
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | ssh -p "$PORT" "$USER@$HOST" "docker login ghcr.io -u '${{ github.actor }}' --password-stdin"
       - name: Deploy with docker compose
         run: |
           IMAGE="ghcr.io/${GITHUB_REPOSITORY,,}"
-          ssh -p "$PORT" "$USER@$HOST" "mkdir -p ~/todo"
-          scp -P "$PORT" app/compose.yaml "$USER@$HOST:~/todo/compose.yaml"
           ssh -p "$PORT" "$USER@$HOST" "
             set -e
             cd ~/todo
-            echo '${{ secrets.GITHUB_TOKEN }}' | docker login ghcr.io -u '${{ github.actor }}' --password-stdin
             export TAG='${{ github.sha }}' API_IMAGE='$IMAGE-api' WEB_IMAGE='$IMAGE-web'
             docker compose pull api web
-            docker compose up -d --no-build
+            docker compose up -d --no-build --wait
             docker image prune -f
           "
+      - name: Smoke test
+        if: vars.APP_URL != ''
+        run: |
+          curl -fsS --retry 5 --retry-delay 3 "${{ vars.APP_URL }}/api/info" | tee info.json
+          grep -q "${{ github.sha }}" info.json
