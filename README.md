@@ -55,7 +55,8 @@ cheatsheet.md        คำสั่งที่ใช้บ่อย
 slides/              สไลด์ประกอบการสอน (PDF)
 ```
 
-📑 สไลด์วันที่ 1: [slides/day1-docker-fundamentals.pdf](slides/day1-docker-fundamentals.pdf)
+📑 สไลด์วันที่ 1: [slides/day1-docker-fundamentals.pdf](slides/day1-docker-fundamentals.pdf)  
+📑 สไลด์วันที่ 2: [slides/day2-compose-cicd.pdf](slides/day2-compose-cicd.pdf)
 
 ## วันที่ 1 — Docker Fundamentals
 
