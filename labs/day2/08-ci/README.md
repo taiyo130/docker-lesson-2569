@@ -26,6 +26,9 @@ git push -u origin main
 ```
 
 > `robocopy` มีในทุก Windows · ถ้าใช้ macOS/Linux: `rsync -a --exclude node_modules --exclude dist app ../todo-cicd/`
+>
+> **fork `docker-lesson-2569` ไว้แล้ว?** ใช้ fork แทนได้ — แต่ต้องเข้าแท็บ **Actions** แล้วกดเปิด workflow ก่อน (GitHub ปิด Actions ของ fork ไว้)
+> และ image จะชื่อ `docker-lesson-2569-api` แทน `todo-cicd-api`
 
 ## 8.2 Workflow แรก: test
 
